@@ -1,9 +1,13 @@
-import { Card, FloatingBackButton, Layout } from "../../components";
+import { Calendar, Card, FloatingBackButton, Layout } from "../../components";
 import { ClockIcon, VideoCameraIcon } from "@heroicons/react/solid";
+import { useState } from "react";
 
 interface ScheduleProps {}
 
 const Schedule = (props: ScheduleProps) => {
+  const [value, onChange] = useState(new Date());
+  const minDate = new Date();
+
   return (
     <Layout>
       <Card>
@@ -32,11 +36,12 @@ const Schedule = (props: ScheduleProps) => {
 
           {/* Right section */}
           <div className="p-5">
-            <h2 className="font-medium text-gray-800 text-xl">
+            <h2 className="font-medium text-gray-800 text-xl pb-2">
               Selet a Date & Time
             </h2>
 
             {/* Calendar */}
+            <Calendar onChange={onChange} value={value} minDate={minDate} />
           </div>
         </div>
       </Card>
