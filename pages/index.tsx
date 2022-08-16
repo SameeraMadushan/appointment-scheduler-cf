@@ -1,13 +1,8 @@
 import type { NextPage } from "next";
+import { HomePage } from "../src/Views";
 
 const Home: NextPage = () => {
-  return (
-    <div className="container mx-auto flex justify-center align-middle h-full">
-      <h1 className="text-6xl font-semibold italic">
-        Next.js Tailwind CSS check
-      </h1>
-    </div>
-  );
+  return <HomePage />;
 };
 
 export default Home;
