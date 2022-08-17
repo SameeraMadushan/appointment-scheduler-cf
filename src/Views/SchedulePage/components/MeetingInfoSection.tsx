@@ -2,18 +2,19 @@ import { ClockIcon, VideoCameraIcon, LinkIcon } from "@heroicons/react/solid";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { saveAppointment } from "../../../services";
 import { DISPLAY_DATE, TIME_FORMAT } from "../../../utils";
 
 interface MeetingInfoSectionProps {
   studentName?: string;
   mentorName?: string;
-  timeSlot?: Date;
+  timeslot?: Date | null;
 }
 
 const MeetingInfoSection = ({
   studentName,
   mentorName,
-  timeSlot
+  timeslot
 }: MeetingInfoSectionProps) => {
   const {
     register,
@@ -21,8 +22,24 @@ const MeetingInfoSection = ({
     handleSubmit
   } = useForm();
 
-  const onSubmit: SubmitHandler<FieldValues> = (values) => {
-    // Save appointment
+  // Confirm appointment
+  const onSubmit: SubmitHandler<FieldValues> = async ({ reason }) => {
+    if (!timeslot) return;
+
+    try {
+      const response = await saveAppointment({
+        reason,
+        timeslot,
+        studentName: "",
+        mentorName: ""
+      });
+
+      if (response.data) {
+        // success
+      }
+    } catch (error) {
+      // Error
+    }
   };
 
   return (
@@ -42,13 +59,13 @@ const MeetingInfoSection = ({
       </h3>
 
       {/* Meeting schedule form */}
-      {timeSlot && (
+      {timeslot && (
         <>
           <div>
             <h3 className="font-medium text-gray-500 text-sm flex my-2">
               <VideoCameraIcon className="h-5 w-5 pr-1" />
               Selected time slot:{" "}
-              {format(new Date(timeSlot), `${DISPLAY_DATE} - ${TIME_FORMAT}`)}
+              {format(new Date(timeslot), `${DISPLAY_DATE} - ${TIME_FORMAT}`)}
             </h3>
           </div>
 
@@ -73,7 +90,7 @@ const MeetingInfoSection = ({
                 className="font-light rounded-md text-gray-50 bg-sky-500 text-sm py-1 mt-3 hover:bg-sky-600"
                 type="submit"
               >
-                Next
+                Confirm
               </button>
             </div>
           </form>

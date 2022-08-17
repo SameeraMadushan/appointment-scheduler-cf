@@ -4,7 +4,7 @@ import { useAgenda } from "../../hooks";
 import { useState } from "react";
 
 const Schedule = () => {
-  const [timeSlot, setTimeSlot] = useState<Date>();
+  const [timeSlot, setTimeSlot] = useState<Date | null>();
   const { loading, agenda = [], mentor, error } = useAgenda();
 
   return (
@@ -18,7 +18,7 @@ const Schedule = () => {
           <MeetingInfoSection
             studentName="Sameera"
             mentorName={mentor?.name}
-            timeSlot={timeSlot}
+            timeslot={timeSlot}
           />
 
           {/* Right side section */}

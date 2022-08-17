@@ -7,7 +7,7 @@ import { DATE_FORMAT, DISPLAY_DATE, TIME_FORMAT } from "../../../utils";
 
 interface SchedulerSectionProps {
   agenda: DateTimeType[];
-  onTimeSlotSelect: (date: Date) => void;
+  onTimeSlotSelect: (date: Date | null) => void;
 }
 
 const SchedulerSection = ({
@@ -38,6 +38,7 @@ const SchedulerSection = ({
       );
     });
     setTimeSlots(filterTimeSlots);
+    onTimeSlotSelect(null);
   };
 
   const getTimeSlot = (date: Date) => {
