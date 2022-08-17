@@ -19,9 +19,9 @@ const TimeslotCard = ({
       <button
         onClick={onConfirm}
         disabled={disabled}
-        className="bg-sky-500 border rounded-md py-1 px-2 text-green-50 text-xs disabled:bg-gray-400"
+        className="bg-sky-500 border rounded-md py-1 px-2 text-green-50 text-xs disabled:bg-gray-400 hover:bg-sky-600"
       >
-        Confirm
+        Select
       </button>
     </div>
   );

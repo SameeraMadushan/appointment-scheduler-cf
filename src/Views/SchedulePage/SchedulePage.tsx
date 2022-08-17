@@ -1,8 +1,10 @@
 import { MeetingInfoSection, SchedulerSection } from "./components";
 import { Card, FloatingBackButton, Layout } from "../../components";
 import { useAgenda } from "../../hooks";
+import { useState } from "react";
 
 const Schedule = () => {
+  const [timeSlot, setTimeSlot] = useState<Date>();
   const { loading, agenda = [], mentor, error } = useAgenda();
 
   return (
@@ -13,10 +15,14 @@ const Schedule = () => {
         {/* Horizontal section wrapper */}
         <div className="flex divide-x divide-slate-300">
           {/* Left side section */}
-          <MeetingInfoSection studentName="Sameera" mentorName={mentor?.name} />
+          <MeetingInfoSection
+            studentName="Sameera"
+            mentorName={mentor?.name}
+            timeSlot={timeSlot}
+          />
 
           {/* Right side section */}
-          <SchedulerSection agenda={agenda} />
+          <SchedulerSection agenda={agenda} onTimeSlotSelect={setTimeSlot} />
         </div>
       </Card>
     </Layout>

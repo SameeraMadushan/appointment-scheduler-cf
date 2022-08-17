@@ -7,9 +7,13 @@ import { DATE_FORMAT, DISPLAY_DATE, TIME_FORMAT } from "../../../utils";
 
 interface SchedulerSectionProps {
   agenda: DateTimeType[];
+  onTimeSlotSelect: (date: Date) => void;
 }
 
-const SchedulerSection = ({ agenda }: SchedulerSectionProps) => {
+const SchedulerSection = ({
+  agenda,
+  onTimeSlotSelect
+}: SchedulerSectionProps) => {
   const [value, setValue] = useState<Date>();
   const [timeSlots, setTimeSlots] = useState<DateTimeType[]>([]);
   const minDate = new Date();
@@ -47,10 +51,9 @@ const SchedulerSection = ({ agenda }: SchedulerSectionProps) => {
     return `${floorTimeStamp} - ${ceilingTimeStamp}`;
   };
 
-  const handleConfirm = (date: Date) => () => {
+  const handleTimeSlotSelect = (date: Date) => () => {
     const dateTimeSlot = new Date(date).setMinutes(0);
-
-    console.log(new Date(dateTimeSlot).toISOString());
+    onTimeSlotSelect(new Date(dateTimeSlot));
   };
 
   return (
@@ -89,7 +92,7 @@ const SchedulerSection = ({ agenda }: SchedulerSectionProps) => {
                 <div key={`${date_time}${i}`}>
                   <TimeslotCard
                     timeslot={getTimeSlot(date_time)}
-                    onConfirm={handleConfirm(date_time)}
+                    onConfirm={handleTimeSlotSelect(date_time)}
                   />
                 </div>
               ))}

@@ -1,9 +1,7 @@
 import { useRouter } from "next/router";
 import { Card, Layout } from "../../components";
 
-interface HomePageProps {}
-
-const HomePage = (props: HomePageProps) => {
+const HomePage = () => {
   const router = useRouter();
 
   const navigateToScheduler = () => {
@@ -23,7 +21,7 @@ const HomePage = (props: HomePageProps) => {
             />
 
             <button
-              className="font-light rounded-md text-gray-50 bg-sky-500 text-sm py-1 mt-3"
+              className="font-light rounded-md text-gray-50 bg-sky-500 text-sm py-1 mt-3 hover:bg-sky-600"
               onClick={navigateToScheduler}
             >
               Next
