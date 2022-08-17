@@ -3,7 +3,7 @@ import { Card, FloatingBackButton, Layout } from "../../components";
 import { useAgenda } from "../../hooks";
 import { useState } from "react";
 
-const Schedule = () => {
+const SchedulePage = () => {
   const [timeSlot, setTimeSlot] = useState<Date | null>();
   const { loading, agenda = [], mentor, error } = useAgenda();
 
@@ -29,4 +29,4 @@ const Schedule = () => {
   );
 };
 
-export default Schedule;
+export default SchedulePage;

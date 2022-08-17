@@ -1,5 +1,6 @@
 import { ClockIcon, VideoCameraIcon, LinkIcon } from "@heroicons/react/solid";
 import { format } from "date-fns";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { saveAppointment } from "../../../services";
@@ -19,8 +20,10 @@ const MeetingInfoSection = ({
   const {
     register,
     formState: { errors },
+    reset,
     handleSubmit
   } = useForm();
+  const router = useRouter();
 
   // Confirm appointment
   const onSubmit: SubmitHandler<FieldValues> = async ({ reason }) => {
@@ -36,6 +39,8 @@ const MeetingInfoSection = ({
 
       if (response.data) {
         // success
+        reset();
+        router.replace(router.asPath);
       }
     } catch (error) {
       // Error

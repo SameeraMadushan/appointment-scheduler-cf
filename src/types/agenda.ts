@@ -5,6 +5,7 @@ export type MentorType = {
 
 export type DateTimeType = {
   date_time: Date;
+  booked?: boolean;
 };
 
 export type AgendaType = {

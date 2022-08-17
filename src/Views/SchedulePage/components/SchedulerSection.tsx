@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarTileProperties } from "react-calendar";
 import { Calendar, TimeslotCard } from "../../../components";
 import { DateTimeType } from "../../../types";
 import { format } from "date-fns";
 import { DATE_FORMAT, DISPLAY_DATE, TIME_FORMAT } from "../../../utils";
+import { useAppointmentContext } from "../../../context/AppointmentContext";
 
 interface SchedulerSectionProps {
   agenda: DateTimeType[];
@@ -16,7 +17,35 @@ const SchedulerSection = ({
 }: SchedulerSectionProps) => {
   const [value, setValue] = useState<Date>();
   const [timeSlots, setTimeSlots] = useState<DateTimeType[]>([]);
+  const appointments = useAppointmentContext();
   const minDate = new Date();
+
+  useEffect(() => {
+    if (!value) return;
+
+    const date = appointments.filter(
+      ({ timeslot }) =>
+        format(new Date(timeslot), DATE_FORMAT) ===
+        format(new Date(value), DATE_FORMAT)
+    );
+
+    if (!date.length) return;
+
+    const newTimeSlots = timeSlots.map(({ date_time }) => {
+      const bookedTime = date.filter(
+        ({ timeslot }) =>
+          format(new Date(timeslot).setMinutes(0), TIME_FORMAT) ===
+          format(new Date(date_time).setMinutes(0), TIME_FORMAT)
+      );
+
+      if (bookedTime.length) return { date_time, booked: true };
+
+      return { date_time };
+    });
+
+    setTimeSlots(newTimeSlots);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, appointments]);
 
   const getDisabledFields = ({ date }: CalendarTileProperties) => {
     if (!agenda) return true;
@@ -89,9 +118,10 @@ const SchedulerSection = ({
 
               {/* Time slot list for selected date */}
 
-              {timeSlots.map(({ date_time }, i) => (
+              {timeSlots.map(({ date_time, booked = false }, i) => (
                 <div key={`${date_time}${i}`}>
                   <TimeslotCard
+                    disabled={booked}
                     timeslot={getTimeSlot(date_time)}
                     onConfirm={handleTimeSlotSelect(date_time)}
                   />
