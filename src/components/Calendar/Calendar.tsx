@@ -1,15 +1,5 @@
 import "react-calendar/dist/Calendar.css";
-import {
-  Calendar as ReactCalendar,
-  OnChangeDateCallback,
-  OnChangeDateRangeCallback
-} from "react-calendar";
-
-interface CalendarProps {
-  value: Date;
-  minDate: Date;
-  onChange: OnChangeDateCallback | OnChangeDateRangeCallback | undefined;
-}
+import { Calendar as ReactCalendar, CalendarProps } from "react-calendar";
 
 const Calendar = ({ minDate, onChange, value, ...rest }: CalendarProps) => {
   return (

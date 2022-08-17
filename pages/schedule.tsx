@@ -1,8 +1,6 @@
 import { SchedulePage } from "../src/Views";
 
-interface ScheduleProps {}
-
-const Schedule = (props: ScheduleProps) => {
+const Schedule = () => {
   return <SchedulePage />;
 };
 
