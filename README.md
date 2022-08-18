@@ -5,7 +5,7 @@
 
 - Installing dependancy : `npm install`
 - Create `.env` file in the root directory and copy content from `.env.example` file
-and set API endpoint as `NEXT_PUBLIC_API_URL=http:/localhost:3000/api` for development environment
+and set API endpoint as `NEXT_PUBLIC_API_URL=http://localhost:3000/api` for development environment
 
 - Starting the dev server: `npm run dev`
 - Open: `http:/localhost:3000`
