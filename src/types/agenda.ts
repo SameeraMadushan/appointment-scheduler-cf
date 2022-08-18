@@ -7,7 +7,7 @@ export type MentorType = {
 };
 
 export type DateTimeType = {
-  date_time: Date;
+  date_time: string;
   booked?: boolean;
 };
 

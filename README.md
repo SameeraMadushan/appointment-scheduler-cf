@@ -89,7 +89,8 @@ body = {
 }
 ```
 
-## Running e2e test with Cypress
+## Unit testing and e2e testing
+### Running e2e test with Cypress
 Clear `.json` files inside `pbublic/db` folder. If appointments exist scheduling an appointment will be failed.
 
 Running tests
@@ -99,3 +100,12 @@ npm run cypress
 
 This will open cypress window. Select e2e testing from the first window.
 Then select `spec.cy.ts` to run the test cases.
+
+### Running unit tests
+Jest is being used to implement the unit tests.
+
+Running tests:
+```
+npm run test
+```
+This command will run the jest unit tests in verbose mode.

@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { TIME_FORMAT } from "../../utils";
 
 interface TimeslotCardProps {
-  timeslot: Date;
+  timeslot: string;
   onConfirm: () => void;
   disabled?: boolean;
 }

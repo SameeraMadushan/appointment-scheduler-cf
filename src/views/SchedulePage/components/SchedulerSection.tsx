@@ -93,7 +93,7 @@ const SchedulerSection = ({
    * This will display meeting form
    * with the reason field and other info
    */
-  const handleTimeSlotSelect = (date: Date) => () => {
+  const handleTimeSlotSelect = (date: string) => () => {
     const dateTimeSlot = new Date(date).setMinutes(0);
     onTimeSlotSelect(new Date(dateTimeSlot));
   };
