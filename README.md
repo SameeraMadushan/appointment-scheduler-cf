@@ -51,6 +51,8 @@ and set API endpoint as `NEXT_PUBLIC_API_URL=http:/localhost:3000/api` for devel
 - Each appointment will be saved as a separate `json` file
 - Context is used to keep state globally(user info and previous appointments)
 - Serverside rendering is used for getting previous appointment data and then passed through the context
+
+### Dependancies
 - `react-hook-form` library is used to handle forms
 - `date-fns` library is used to format dates
 - `@heroicons/react` icon library is used as a icon pack
@@ -66,10 +68,11 @@ and set API endpoint as `NEXT_PUBLIC_API_URL=http:/localhost:3000/api` for devel
 /src              // source 
 /src/components   // all the re usable components
 /src/hooks        // custom hooks
-/src/services     // API client and related service calls
+/src/services     // API client, endpoints, and related service calls
 /src/types        // re-usable types for Typescript
 /src/utils        // utility functions and constants
 /src/vluews       // page views and it's related components
+/.env.example     // sample env confgs
 ```
 
 ## API Requirement for backend Devs
