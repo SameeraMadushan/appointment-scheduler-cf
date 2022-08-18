@@ -6,3 +6,4 @@ export { default as Card } from "./Card";
 export { default as FloatingBackButton } from "./FloatingBackButton";
 export { default as Calendar } from "./Calendar";
 export { default as TimeslotCard } from "./TimeslotCard";
+export { default as ConfirmationModal } from "./ConfirmationModal";

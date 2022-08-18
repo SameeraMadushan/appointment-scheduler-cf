@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { ConfirmationModal } from "../../../components";
 import { saveAppointment } from "../../../services";
 import { DISPLAY_DATE, TIME_FORMAT } from "../../../utils";
 
@@ -27,18 +27,29 @@ const MeetingInfoSection = ({
     register,
     formState: { errors },
     reset,
-    handleSubmit
+    handleSubmit,
+    getValues
   } = useForm();
   const router = useRouter();
   const [submitError, setSubmitError] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Show Confirmation modal
+  const onSubmit = async () => {
+    setIsOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsOpen(false);
+  };
 
   // Confirm appointment
-  const onSubmit: SubmitHandler<FieldValues> = async ({ reason }) => {
+  const onConfirmAppointment = async () => {
     if (!timeslot) return;
 
     try {
       const response = await saveAppointment({
-        reason,
+        reason: getValues("reason"),
         timeslot,
         studentName,
         mentorName: mentorName
@@ -51,10 +62,12 @@ const MeetingInfoSection = ({
         // reFethcing appointments to validate timeslots
         router.replace(router.asPath);
         setTimeSlot(null);
+        setIsOpen(false);
       }
     } catch (error) {
       // Error
       setSubmitError("Error placing appointment");
+      setIsOpen(false);
     }
   };
 
@@ -106,7 +119,7 @@ const MeetingInfoSection = ({
                 className="font-light rounded-md text-gray-50 bg-sky-500 text-sm py-1 mt-3 hover:bg-sky-600"
                 type="submit"
               >
-                Confirm
+                Next
               </button>
 
               {submitError && (
@@ -114,6 +127,28 @@ const MeetingInfoSection = ({
               )}
             </div>
           </form>
+
+          <ConfirmationModal
+            isOpen={isOpen}
+            onClose={handleModalClose}
+            onConfirm={onConfirmAppointment}
+          >
+            <div className="p-10">
+              <h1 className="text-lg font-light text-gray-500 py-3">
+                {studentName} | {mentorName}
+              </h1>
+
+              <h3 className="font-medium text-gray-500 text-sm flex my-2">
+                <VideoCameraIcon className="h-5 w-5 pr-1" />
+                Date & Time:{" "}
+                {format(new Date(timeslot), `${DISPLAY_DATE} - ${TIME_FORMAT}`)}
+              </h3>
+
+              <p className="border text-xs rounded-md border-gray-200 my-3 p-2 whitespace-pre-wrap">
+                {getValues("reason")}
+              </p>
+            </div>
+          </ConfirmationModal>
         </>
       )}
     </div>
