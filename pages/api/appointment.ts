@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { writeFileSync } from "fs";
 
+// Save appointment as a json file
 export default async function handlerPost(
   req: NextApiRequest,
   res: NextApiResponse
