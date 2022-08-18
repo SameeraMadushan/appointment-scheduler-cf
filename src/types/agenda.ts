@@ -1,3 +1,6 @@
+/**
+ * Re-usable types
+ */
 export type MentorType = {
   name: string;
   time_zone: string;

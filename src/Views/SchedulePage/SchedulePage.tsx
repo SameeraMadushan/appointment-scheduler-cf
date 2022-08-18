@@ -3,6 +3,9 @@ import { Card, FloatingBackButton, Layout } from "../../components";
 import { useAgenda } from "../../hooks";
 import { useState } from "react";
 
+/**
+ * View of the scheduling page
+ */
 const SchedulePage = () => {
   const [timeSlot, setTimeSlot] = useState<Date | null>();
   const { loading, agenda = [], mentor, error } = useAgenda();
@@ -19,6 +22,7 @@ const SchedulePage = () => {
             studentName="Sameera"
             mentorName={mentor?.name}
             timeslot={timeSlot}
+            setTimeSlot={setTimeSlot}
           />
 
           {/* Right side section */}

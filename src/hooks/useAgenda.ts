@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { getAgenda } from "../services";
 import { DateTimeType, MentorType } from "../types";
 
+/**
+ * This custom hook will handle fetching available agenda
+ * from the API.
+ * It will return agenda data, error state, and the loading state
+ */
 const useAgenda = (dependancy = []) => {
   const [agenda, setAgenda] = useState<DateTimeType[] | undefined>();
   const [mentor, setMentor] = useState<MentorType | undefined>();
@@ -24,10 +29,9 @@ const useAgenda = (dependancy = []) => {
         setMentor(data.mentor);
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        // Error fetching agenda
         setError("Unexpected error occurred");
         setLoading(false);
-        // Error fetching agenda
       }
     };
 

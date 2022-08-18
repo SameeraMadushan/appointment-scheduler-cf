@@ -11,6 +11,9 @@ interface SchedulerSectionProps {
   onTimeSlotSelect: (date: Date | null) => void;
 }
 
+/**
+ * Scheduling calendar and time slot selection
+ */
 const SchedulerSection = ({
   agenda,
   onTimeSlotSelect
@@ -20,9 +23,14 @@ const SchedulerSection = ({
   const appointments = useAppointmentContext();
   const minDate = new Date();
 
+  /**
+   * On component update, load previous appointments
+   * and set timeslots to disable if it's already booked
+   */
   useEffect(() => {
     if (!value) return;
 
+    // Getting the date from existing appointments
     const date = appointments.filter(
       ({ timeslot }) =>
         format(new Date(timeslot), DATE_FORMAT) ===
@@ -31,6 +39,7 @@ const SchedulerSection = ({
 
     if (!date.length) return;
 
+    // Map time slots within the selected date
     const newTimeSlots = timeSlots.map(({ date_time }) => {
       const bookedTime = date.filter(
         ({ timeslot }) =>
@@ -38,6 +47,7 @@ const SchedulerSection = ({
           format(new Date(date_time).setMinutes(0), TIME_FORMAT)
       );
 
+      // If a appointment exist set to booked=true
       if (bookedTime.length) return { date_time, booked: true };
 
       return { date_time };
@@ -47,6 +57,11 @@ const SchedulerSection = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, appointments]);
 
+  /**
+   * Get disabled fields for calendar day tiles
+   * If the day isn't in the agenda,
+   * Day will be disabled
+   */
   const getDisabledFields = ({ date }: CalendarTileProperties) => {
     if (!agenda) return true;
     const disableDates = agenda.filter(
@@ -58,6 +73,9 @@ const SchedulerSection = ({
     return true;
   };
 
+  /**
+   * Filter timeslots for the selected date
+   */
   const handleOnDateSelect = (date: Date) => {
     setValue(date);
     const filterTimeSlots = agenda.filter(({ date_time }) => {
@@ -70,17 +88,11 @@ const SchedulerSection = ({
     onTimeSlotSelect(null);
   };
 
-  const getTimeSlot = (date: Date) => {
-    const floorHour = new Date(date).setMinutes(0);
-    const floorTimeStamp = format(new Date(date).setMinutes(0), TIME_FORMAT);
-    const ceilingTimeStamp = format(
-      new Date(floorHour).setMinutes(60),
-      TIME_FORMAT
-    );
-
-    return `${floorTimeStamp} - ${ceilingTimeStamp}`;
-  };
-
+  /**
+   * Action on timeslot select
+   * This will display meeting form
+   * with the reason field and other info
+   */
   const handleTimeSlotSelect = (date: Date) => () => {
     const dateTimeSlot = new Date(date).setMinutes(0);
     onTimeSlotSelect(new Date(dateTimeSlot));
@@ -117,12 +129,11 @@ const SchedulerSection = ({
               </div>
 
               {/* Time slot list for selected date */}
-
               {timeSlots.map(({ date_time, booked = false }, i) => (
                 <div key={`${date_time}${i}`}>
                   <TimeslotCard
                     disabled={booked}
-                    timeslot={getTimeSlot(date_time)}
+                    timeslot={date_time}
                     onConfirm={handleTimeSlotSelect(date_time)}
                   />
                 </div>

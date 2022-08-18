@@ -6,7 +6,12 @@ interface LayoutProps {
   error?: string;
 }
 
+/**
+ * Common layout of the pages
+ * This component will handle data loading and error state as well
+ */
 const Layout = ({ children, loading, error }: LayoutProps) => {
+  // Return error screen
   if (error) {
     return (
       <div className="h-screen flex justify-center items-center">

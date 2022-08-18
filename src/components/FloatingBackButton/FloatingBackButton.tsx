@@ -1,9 +1,15 @@
 import { useRouter } from "next/router";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
 
+/**
+ * Floating back button with an icon
+ */
 const FloatingBackButton = () => {
   const router = useRouter();
 
+  /**
+   * Navigate to back
+   */
   const handleBack = () => {
     router.back();
   };
